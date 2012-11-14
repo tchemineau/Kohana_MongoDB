@@ -96,30 +96,10 @@ class Model_Mongo extends Kohana_Model
 		}
 				
 		// Add ID if already loaded
-		if( $this->loaded() OR is_a($this->_id, 'MongoId') )
+		// if( $this->loaded() OR is_a($this->_id, 'MongoId') )
+		if( $this->loaded() OR isset($this->_id) )
 		{
 			$obj['_id'] = $this->_id;
-		}
-		else 
-		{
-			$unique_user = Model_User::unique_username($this->username);
-			$unique_email = Model_User::unique_email($this->email);
-			
-			// Make sure Username and Email are unique
-			if( ! $unique_user  )
-			{
-				$this->_error['username'] = 'Must be unique';
-			}
-			if( ! $unique_email )
-			{
-				$this->_error['email'] = 'Must be unique';
-			}
-			
-			if( ! $unique_user or ! $unique_email )
-			{
-				return false;
-			}
-			
 		}
 		
 		try {
@@ -177,6 +157,11 @@ class Model_Mongo extends Kohana_Model
 	public function last_error()
 	{
 		return $this->_error;
+	}
+	
+	public function collection()
+	{
+		return $this->_collection;
 	}
 	
 }

@@ -43,4 +43,9 @@ class Mongo_Collection
 		
 		return Model::factory($this->_model)->values($doc);
 	}
+	
+	public function self()
+	{
+		return $this->_collection;
+	}
 }
