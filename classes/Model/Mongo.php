@@ -85,6 +85,12 @@ class Model_Mongo extends Kohana_Model
 	public function save($validate = true)
 	{
 		$obj = $this->get_public_vars();
+		
+		// Remove reserved fields
+		if( $this->_reserved )
+		{
+			$obj = $this->remove_reserved($obj);
+		}
 
 		// Validate the model if validate method has beem defined
 		if( $validate === true and method_exists($this,'validate') )
@@ -152,7 +158,18 @@ class Model_Mongo extends Kohana_Model
 	    }
 	    
 	    return $result;
-	}	
+	}
+	
+	public function remove_reserved($obj)
+	{
+		foreach($this->_reserved as $key)
+		{
+			if( isset($obj[$key]) )
+			  unset($obj[$key]);
+		}
+		
+		return $obj;
+	}
 	
 	public function last_error()
 	{

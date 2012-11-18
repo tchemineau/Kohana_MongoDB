@@ -18,9 +18,9 @@ class Mongo_Collection
 		$this->_collection = new MongoCollection($this->_db, strtolower($collection));
 	}
 	
-	public function find($query=array())
+	public function find($query=array(),$fields=array())
 	{
-		$cursor = $this->_collection->find($query);
+		$cursor = $this->_collection->find($query,$fields);
 		
 		$result = array();
 		
