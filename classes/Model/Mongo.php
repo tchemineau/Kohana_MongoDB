@@ -109,7 +109,7 @@ class Model_Mongo extends Kohana_Model
 		}
 		
 		try {
-			$this->_collection->save($obj, array('safe'=>true));
+			$this->_collection->save($obj, array('w'=>true));
 		}
 		catch (MongoException $e) {
 			$this->_error = $e->getMessage();

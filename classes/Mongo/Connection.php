@@ -31,7 +31,7 @@ class Mongo_Connection
 		// Set the DB Name
 		$this->_db = $this->_config['database'];
 		
-		$this->_conn = new Mongo('mongodb://'.$str);
+		$this->_conn = new MongoClient('mongodb://'.$str);
 	}
 
 	public static function instance($config='default')
