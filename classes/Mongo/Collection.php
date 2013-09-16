@@ -18,10 +18,16 @@ class Mongo_Collection
 		$this->_collection = new MongoCollection($this->_db, strtolower($collection));
 	}
 	
-	public function find($query=array(),$fields=array())
+	public function find($query=array(),$fields=array(),$limit=NULL,$skip=NULL)
 	{
 		$cursor = $this->_collection->find($query,$fields);
-		
+
+		if (!is_null($limit))
+			$cursor = $cursor->limit($limit);
+
+		if (!is_null($skip))
+			$cursor = $cursor->skip($skip);
+
 		$result = array();
 		
 		foreach($cursor as $doc)
