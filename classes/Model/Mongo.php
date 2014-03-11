@@ -82,7 +82,7 @@ class Model_Mongo extends Kohana_Model
 		return $this;
 	}
 	
-	public function save($validate = true)
+	public function save($validate = true, $options = null)
 	{
 		$obj = $this->get_public_vars();
 		
@@ -100,7 +100,7 @@ class Model_Mongo extends Kohana_Model
 				return false;
 			}
 		}
-				
+
 		// Add ID if already loaded
 		// if( $this->loaded() OR is_a($this->_id, 'MongoId') )
 		if( $this->loaded() OR isset($this->_id) )
@@ -109,7 +109,11 @@ class Model_Mongo extends Kohana_Model
 		}
 		
 		try {
-			$this->_collection->save($obj, array('w'=>true));
+			// Set default options if not set
+			if ( ! $options)
+				$options = array( 'w' => true );
+
+			$this->_collection->save($obj, $options);
 		}
 		catch (MongoException $e) {
 			$this->_error = $e->getMessage();
